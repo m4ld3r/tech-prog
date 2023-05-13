@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cmath>
+#include <ctime>
 using namespace std;
 
 bool Check(int ch){
@@ -9,32 +10,30 @@ bool Check(int ch){
         kol_cifr += 1;
         dubl_ch /=10;
     }
+
+    if(kol_cifr < 1) return true;
+    
     int *mas = new int[kol_cifr];
     for(int i = kol_cifr-1; i >= 0; i--){
         mas[i] = ch%10;
         ch /=10;
     }
-
-    if(kol_cifr <= 1){
-        delete[]mas;
-        return false;
-    }
-    
     for(int i = 0; i < kol_cifr/2; i++)
         for(int j = kol_cifr-1; j >= kol_cifr/2; j--)
-            if(mas[i] == mas[j]){
+            if(mas[i] != mas[j]){
                 delete[]mas;
-                return false;
+                return true;
             }
-        
+    
     delete[]mas;
-    return true;
+    return false;
 }
 
 int main(){
+    srand(time(NULL));
 	int n, m, kol = 0; long int summa = 0; float pw = 1, st_pow = 0;
 
-    cout << "\nn: "; cin >> n;
+    cout << "n: "; cin >> n;
     cout << "m: "; cin >> m;
     int **A = new int *[n], **B = new int *[n],**C = new int *[n];
     for (int i = 0; i < n; i++){
@@ -45,7 +44,7 @@ int main(){
     cout << "A:\n";
     for (int i = 0; i < n; i++){
         for (int j = 0; j < m; j++){
-            A[i][j] = rand()%10;
+            A[i][j] = 15 + rand()%100;
             cout << A[i][j] << " ";
             C[i][j] = rand()%10;
             summa += A[i][j];

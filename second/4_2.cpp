@@ -1,7 +1,6 @@
 #include <iostream>
 #include <cmath>
 #include <ctime>
-#include <chrono>
 using namespace std;
 
 void multiplication_mat(int** A, int** B, int** C, int n, string choose) {
@@ -68,54 +67,55 @@ void multiplication_mat(int** A, int** B, int** C, int n, string choose) {
 }
 
 int main() {
-    cout << "Размер матриц:\tIJK\tIKJ\tJIK\tJKI\tKIJ\tKJI\n";
-    srand(time(NULL));
-    int size_matr = 0;
-    while(size_matr < 2000){
-    	size_matr+=500;
-        cout << size_matr << "\t\t";
-	    int **Matr1 = new int*[size_matr], **Matr2 = new int*[size_matr], **C = new int*[size_matr];
-		for(int i = 0; i < size_matr; i++){
-	        Matr1[i] = new int[size_matr];
-	        Matr2[i] = new int[size_matr];
-	        C[i] =  new int [size_matr];
-	    }
-	    for(int i = 0; i < size_matr; i++)
-	        for(int j = 0; j < size_matr; j++){
-	            Matr1[i][j] = rand()%1000;
-	            Matr2[i][j] = rand()%1000;
-	        }
-	    auto timeNULL = high_resolution_clock::now();
-        multiplication_mas(Matr1, Matr2, C, size_matr, size2, "IJK");
-        auto timeONE = high_resolution_clock::now();
-        cout << duration_cast<milliseconds>(timeONE-timeNULL).count()/1000<<"\t";
-        timeNULL = high_resolution_clock::now();
-        multiplication_mas(Matr1, Matr2, C, size_matr, "IKJ");
-        timeONE = high_resolution_clock::now();
-        cout<<duration_cast<milliseconds>(timeONE-timeNULL).count()/1000<<"\t";
-        timeNULL = high_resolution_clock::now();
-        multiplication_mas(Matr1, Matr2, C, size_matr, "JIK");
-        timeONE = high_resolution_clock::now();
-        cout<<duration_cast<milliseconds>(timeONE-timeNULL).count()/1000<<"\t";
-        timeNULL = high_resolution_clock::now();
-        multiplication_mas(Matr1, Matr2, C, size_matr, "JKI");
-        timeONE = high_resolution_clock::now();
-        cout<<duration_cast<milliseconds>(timeONE-timeNULL).count()/1000<<"\t";
-        timeNULL = high_resolution_clock::now();
-        multiplication_mas(Matr1, Matr2, C, size_matr, "KIJ");
-        timeONE = high_resolution_clock::now();
-        cout<<duration_cast<milliseconds>(timeONE-timeNULL).count()/1000<<"\t";
-        timeNULL = high_resolution_clock::now();
-        multiplication_mas(Matr1, Matr2, C, size_matr, "KJI");
-        timeONE = high_resolution_clock::now();
-        cout<<duration_cast<milliseconds>(timeONE-timeNULL).count()/1000<<"\n";
-
-        for(int i = 0; i < size_matr; i++){
-            delete[]Matr1[i];
-            delete[]Matr2[i];
-            delete[]C[i];
-        }
-        delete[]Matr1; delete[]Matr2; delete[]C;
-    }
+	setlocale(LC_ALL, "Rus");
+	srand(time(NULL));
+	cout << "Размер матриц:\tIJK\tIKJ\tJIK\tJKI\tKIJ\tKJI\n";
+	int size_matr = 0;
+	clock_t start, end;
+	while (size_matr < 2000) {
+		size_matr += 500;
+		cout << size_matr << "\t\t";
+		int** Matr1 = new int* [size_matr], ** Matr2 = new int* [size_matr], ** C = new int* [size_matr];
+		for (int i = 0; i < size_matr; i++) {
+			Matr1[i] = new int[size_matr];
+			Matr2[i] = new int[size_matr];
+			C[i] = new int[size_matr];
+		}
+		for (int i = 0; i < size_matr; i++)
+			for (int j = 0; j < size_matr; j++) {
+				Matr1[i][j] = rand() % 1000;
+				Matr2[i][j] = rand() % 1000;
+			}
+		start = clock();
+		multiplication_mat(Matr1, Matr2, C, size_matr, "IJK");
+		end = clock();
+		cout << (double)(end - start) / CLOCKS_PER_SEC << "\t";
+		start = clock();
+		multiplication_mat(Matr1, Matr2, C, size_matr, "IKJ");
+		end = clock();
+		cout << (double)(end - start) / CLOCKS_PER_SEC << "\t";
+		start = clock();
+		multiplication_mat(Matr1, Matr2, C, size_matr, "JIK");
+		end = clock();
+		cout << (double)(end - start) / CLOCKS_PER_SEC << "\t";
+		start = clock();
+		multiplication_mat(Matr1, Matr2, C, size_matr, "JKI");
+		end = clock();
+		cout << (double)(end - start) / CLOCKS_PER_SEC << "\t";
+		start = clock();
+		multiplication_mat(Matr1, Matr2, C, size_matr, "KIJ");
+		end = clock();
+		cout << (double)(end - start) / CLOCKS_PER_SEC << "\t";
+		start = clock();
+		multiplication_mat(Matr1, Matr2, C, size_matr, "KJI");
+		end = clock();
+		cout << (double)(end - start) / CLOCKS_PER_SEC << "\n";
+		for (int i = 0; i < size_matr; i++) {
+			delete[]Matr1[i];
+			delete[]Matr2[i];
+			delete[]C[i];
+		}
+		delete[]Matr1; delete[]Matr2; delete[]C;
+	}
 	return 0;
 }

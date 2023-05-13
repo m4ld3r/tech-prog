@@ -58,6 +58,7 @@ int main() {
     srand(time(NULL));
     cout << "\n\tРазмер массива:\tIJK\tIKJ\tJIK\tJKI\tKIJ\tKJI\n";
     int size1 = 0;
+    clock_t start, end;
     while (size1 < 2000) {
         size1 += 500;
         cout << "\t" << size1 << " * " << size1 << "\t";
@@ -66,30 +67,30 @@ int main() {
             mas_A[i] = rand() % 100;
             mas_C[i] = rand() % 100;
         }
-        auto timeNULL = high_resolution_clock::now();
+        start = clock();
         multiplication_mas(mas_A, mas_B, mas_C, size1, size2, "IJK");
-        auto timeONE = high_resolution_clock::now();
-        cout << duration_cast<milliseconds>(timeONE-timeNULL).count()/1000<<"\t";
-        timeNULL = high_resolution_clock::now();
+        end = clock();
+        cout << (double)(end - start) / CLOCKS_PER_SEC << "\t";
+        start = clock();
         multiplication_mas(mas_A, mas_B, mas_C, size1, size2, "IKJ");
-        timeONE = high_resolution_clock::now();
-        cout<<duration_cast<milliseconds>(timeONE-timeNULL).count()/1000<<"\t";
-        timeNULL = high_resolution_clock::now();
+        end = clock();
+        cout << (double)(end - start) / CLOCKS_PER_SEC << "\t";
+        start = clock();
         multiplication_mas(mas_A, mas_B, mas_C, size1, size2, "JIK");
-        timeONE = high_resolution_clock::now();
-        cout<<duration_cast<milliseconds>(timeONE-timeNULL).count()/1000<<"\t";
-        timeNULL = high_resolution_clock::now();
+        end = clock();
+        cout << (double)(end - start) / CLOCKS_PER_SEC << "\t";
+        start = clock();
         multiplication_mas(mas_A, mas_B, mas_C, size1, size2, "JKI");
-        timeONE = high_resolution_clock::now();
-        cout<<duration_cast<milliseconds>(timeONE-timeNULL).count()/1000<<"\t";
-        timeNULL = high_resolution_clock::now();
+        end = clock();
+        cout << (double)(end - start) / CLOCKS_PER_SEC << "\t";
+        start = clock();
         multiplication_mas(mas_A, mas_B, mas_C, size1, size2, "KIJ");
-        timeONE = high_resolution_clock::now();
-        cout<<duration_cast<milliseconds>(timeONE-timeNULL).count()/1000<<"\t";
-        timeNULL = high_resolution_clock::now();
+        end = clock();
+        cout << (double)(end - start) / CLOCKS_PER_SEC << "\t";
+        start = clock();
         multiplication_mas(mas_A, mas_B, mas_C, size1, size2, "KJI");
-        timeONE = high_resolution_clock::now();
-        cout<<duration_cast<milliseconds>(timeONE-timeNULL).count()/1000<<"\n";
+        end = clock();
+        cout << (double)(end - start) / CLOCKS_PER_SEC << "\n";
         delete[]mas_A, delete[]mas_B, delete[]mas_C;
     }
     return 0;
