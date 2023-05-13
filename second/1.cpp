@@ -11,7 +11,7 @@ bool Check(int ch){
         dubl_ch /=10;
     }
 
-    if(kol_cifr < 1) return true;
+    if(kol_cifr <= 1) return true;
     
     int *mas = new int[kol_cifr];
     for(int i = kol_cifr-1; i >= 0; i--){
@@ -44,7 +44,7 @@ int main(){
     cout << "A:\n";
     for (int i = 0; i < n; i++){
         for (int j = 0; j < m; j++){
-            A[i][j] = 15 + rand()%100;
+            A[i][j] = 1 + rand()%20;
             cout << A[i][j] << " ";
             C[i][j] = rand()%10;
             summa += A[i][j];

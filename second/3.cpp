@@ -3,17 +3,30 @@
 using namespace std;
 
 bool Check(double** I, double** E) {
-    double** I_pow_two = new double* [3];
+    int** I_pow_two = new int* [3];
+    double **second_I = new double*[3];
+    for(int i = 0; i < 3; i++) {
+        second_I[i] = new double[3];
+        for(int j = 0; j < 3; j++)
+            second_I[i][j] = I[i][j];
+    }
+
     for (int i = 0; i < 3; i++) {
-        I_pow_two[i] = new double[3];
+        I_pow_two[i] = new int[3];
         for (int j = 0; j < 3; j++) {
             I_pow_two[i][j] = 0;
             for (int k = 0; k < 3; k++)
-                I_pow_two[i][j] += I[i][k] * I[k][j];
-            if (I_pow_two[i][j] != E[i][j]) return false;
+                I_pow_two[i][j] += I[i][k] * second_I[k][j];
+            /* if (I_pow_two[i][j] != E[i][j]) return false; */
         }
     }
-    return true;
+    cout << "\nI^2:\n";
+    for(int i = 0; i < 3; i++){
+        for(int j = 0; j < 3; j++)
+            cout << I_pow_two[i][j] << " ";
+        cout << endl;
+    }
+    return false;
 }
 
 double* Gauss(double** I, double* Units){
@@ -67,8 +80,10 @@ int main() {
         E[i] = new double[3];
         I[i] = new double[3];
         Units[i] = 1;
-        for (int j = 0; j < 3; j++)
-            E[i][j] = 1;
+        for (int j = 0; j < 3; j++){
+            if(i == j) E[i][j] = 1;
+            else E[i][j] = 0;
+        }
     }
     P[0][0] = -26;
     P[0][1] = -18;
@@ -79,12 +94,23 @@ int main() {
     P[2][1] = 8;
     P[2][2] = 13;
 
-    cout << "I:\n";
+    cout << "2*P:\n";
     for (int i = 0; i < 3; i++) {
         for (int j = 0; j < 3; j++) {
-            I[i][j] = 2 * P[i][j] - E[i][j];
-            cout << I[i][j] << " ";
+            I[i][j] = 2 * P[i][j];
+            if(i == j){
+                I[i][j] -= E[i][j];
+            }
+
+            /* cout << I[i][j] << " "; */
+            cout << 2 * P[i][j] << " ";
         }
+        cout << endl;
+    }
+    cout << "\nI:\n";
+    for(int i = 0; i < 3; i++){
+        for(int j = 0; j < 3; j++)
+            cout << I[i][j] << " ";
         cout << endl;
     }
 
