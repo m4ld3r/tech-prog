@@ -3,12 +3,14 @@
 using namespace std;
 
 bool Check(double** I, double** E) {
-    int** I_pow_two = new int* [3];
-    double **second_I = new double*[3];
+    int** I_pow_two = new int* [3], **first_I = new int*[3],**second_I = new int*[3];
     for(int i = 0; i < 3; i++) {
-        second_I[i] = new double[3];
-        for(int j = 0; j < 3; j++)
-            second_I[i][j] = I[i][j];
+        first_I[i] = second_I[i] = new int[3];
+        for(int j = 0; j < 3; j++){
+            first_I[i][j] = second_I[i][j] = round(I[i][j]);
+            cout << first_I[i][j] << " " << I[i][j] << "   ";
+        }
+        cout << endl;
     }
 
     for (int i = 0; i < 3; i++) {
@@ -16,17 +18,18 @@ bool Check(double** I, double** E) {
         for (int j = 0; j < 3; j++) {
             I_pow_two[i][j] = 0;
             for (int k = 0; k < 3; k++)
-                I_pow_two[i][j] += I[i][k] * second_I[k][j];
-            /* if (I_pow_two[i][j] != E[i][j]) return false; */
+                I_pow_two[i][j] += first_I[i][k] * second_I[k][j];
+            if (I_pow_two[i][j] != E[i][j]) return false;
         }
     }
+
     cout << "\nI^2:\n";
     for(int i = 0; i < 3; i++){
         for(int j = 0; j < 3; j++)
             cout << I_pow_two[i][j] << " ";
         cout << endl;
     }
-    return false;
+    return true;
 }
 
 double* Gauss(double** I, double* Units){
@@ -101,8 +104,6 @@ int main() {
             if(i == j){
                 I[i][j] -= E[i][j];
             }
-
-            /* cout << I[i][j] << " "; */
             cout << 2 * P[i][j] << " ";
         }
         cout << endl;
@@ -114,14 +115,16 @@ int main() {
         cout << endl;
     }
 
+
+    if (Check(I, E))cout << "\nПроверка пройдена успешно\n";
+    else cout << "\nПроверка пройдена неудачно\n";
+    cout << endl;
+
     cout << "\nX:\n";
     X = Gauss(I, Units);
     for (int i = 0; i < 3; i++)
         cout << X[i] << " ";
     cout << endl;
 
-    if (Check(I, E))cout << "\nПроверка пройдена успешно\n";
-    else cout << "\nПроверка пройдена неудачно\n";
-    cout << endl;
     return 0;
 }
