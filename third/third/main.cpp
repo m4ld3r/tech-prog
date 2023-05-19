@@ -88,3 +88,101 @@ int main(){
     }        
     return 0;
 }
+/*
+#include <iostream>
+#include <fstream>
+#include <complex>
+#include <ctime>
+using namespace std;
+//Для матриц А и В size*size найти С = (A^2 + B^2)^T
+int main() {
+    srand(time(NULL));
+    ofstream mat_A("matrix_A.txt"), mat_B("matrix_B.txt");
+    int sss = 3, p;
+    for (int i = 0; i < sss; i++) {
+        for (int j = 0; j < sss * 2; j++) {
+            p = 1 + rand() % 14;
+            mat_A << p << " ";
+            p = 1 + rand() % 14;
+            mat_B << p << " ";
+        }
+        mat_A << endl;
+        mat_B << endl;
+    }
+    mat_A.close(); mat_B.close();
+
+    ifstream size_matrix("matrix_A.txt"), matr_A("matrix_A.txt"), matr_B("matrix_B.txt");
+    if (size_matrix.is_open() && matr_A.is_open() && matr_B.is_open()) {
+        int size = 0, buf;
+        string number;
+        char symbol;
+
+        while (symbol != '\size') {
+            size_matrix >> number; size++;
+            size_matrix.get(symbol);
+        }
+        size /= 2;
+        size_matrix.close();
+
+        complex <int>** A = new complex<int>*[size], ** B = new complex<int>*[size], ** prom_C = new complex<int>*[size], ** C = new complex<int>*[size];
+        for (int i = 0; i < size; i++) {
+            A[i] = new complex<int>[size];
+            B[i] = new complex<int>[size];
+            prom_C[i] = new complex<int>[size];
+            C[i] = new complex<int>[size];
+            for (int j = 0; j < size; j++) {
+                matr_A >> buf; A[i][j].real(buf);
+                matr_A >> buf; A[i][j].imag(buf);
+                matr_B >> buf; B[i][j].real(buf);
+                matr_B >> buf; B[i][j].imag(buf);
+            }
+        }
+        matr_A.close();
+        matr_B.close();
+
+        cout << "\nA:\n";
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) cout << A[i][j] << " ";
+            cout << endl;
+        }
+
+        cout << "\nB:\n";
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) cout << B[i][j] << " ";
+            cout << endl;
+        }
+
+        cout << "\nprom_C:\n";
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                A[i][j] *= A[i][j];
+                B[i][j] *= B[i][j];
+                prom_C[i][j] = A[i][j] + B[i][j];
+                cout << prom_C[i][j] << " ";
+            }
+            cout << endl;
+        }
+
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                C[j][i] = prom_C[i][j];
+            }
+        }
+
+        cout << "\nC^T:\n";
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) cout << C[i][j] << " ";
+            cout << endl;
+        }
+
+        for (int i = 0; i < size; i++) {
+            delete[]A[i];
+            delete[]B[i];
+            delete[]C[i];
+            delete[]prom_C[i];
+        }
+        delete[]A; delete[]B; delete[]C; delete[]prom_C;
+    }
+    return 0;
+}
+*/
